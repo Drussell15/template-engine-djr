@@ -88,7 +88,7 @@ function employeePrompts() {
                         {
                             type: "input",
                             message: "What is your employee's GitHub username?",
-                            name: "gitHubUN"
+                            name: "gitHubID"
                         },
                         {
                             type: "list",
@@ -98,7 +98,7 @@ function employeePrompts() {
                         }
                     ])
                     .then(function (response) {
-                        let employeeGitHub = response.gitHubUN;
+                        let employeeGitHub = response.gitHubID;
 
                         let engineer = new Engineer(
                             employeeName,
