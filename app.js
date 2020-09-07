@@ -63,6 +63,16 @@ function managerPrompts() {
                 message: "what is your engineer's email?"
             },
             {
+                type: "input",
+                name: "engineerId",
+                message: "what is your engineer's Id Number?"
+            },
+            {
+                type: "input",
+                name: "github",
+                message: "what is your engineer's github username?"
+            }
+            
 
 
                 function employeePrompts() {
