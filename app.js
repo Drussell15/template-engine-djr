@@ -58,6 +58,11 @@ function managerPrompts() {
                 message: "what is your engineer's name?"
             },
             {
+                type: "input",
+                name: "email",
+                message: "what is your engineer's email?"
+            },
+            {
 
 
                 function employeePrompts() {
