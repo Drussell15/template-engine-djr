@@ -49,131 +49,127 @@ function managerPrompts() {
         .catch(funtion(err) {
             console.log(err);
         });
-
-    employeeList.push(manager);
-
-    employeeID++;
-
-    console.log(`
-         
-         Now we'll collect information from you about your employees
-         
-         `);
-
-    employeePrompts();
-});
-}
-
-function employeePrompts() {
-    inquirer
-        .prompt([
-            {
-                type: "list",
-                message: "What is the employee's role?",
-                choices: ["Engineer", "Intern"],
-                name: "employeeType"
-            },
+    //Now we'll collect information from you about your engineer 
+    function addEngineer() {
+        inquirer.prompt([
             {
                 type: "input",
-                message: "What is the employee's name?",
-                name: "employeeName"
+                name: "name",
+                message: "what is your engineer's name?"
             },
             {
-                type: "input",
-                message: "What is the employee's email address?",
-                name: "employeeEmail"
-            }
-        ])
-        .then(function (response) {
-            let employeeType = response.employeeType;
-            let employeeName = response.employeeName;
-            let employeeEmail = response.employeeEmail;
 
-            if (employeeType === "Engineer") {
+
+                function employeePrompts() {
                 inquirer
                     .prompt([
-                        {
-                            type: "input",
-                            message: "What is your employee's GitHub username?",
-                            name: "gitHubID"
-                        },
-                        {
-                            type: "list",
-                            message: "Do you have more employees you'd like to add?",
-                            choices: ["Yes", "No"],
-                            name: "moreEmployees"
-                        }
-                    ])
+                    {
+                        type: "list",
+                        message: "What is the employee's role?",
+                        choices: ["Engineer", "Intern"],
+                        name: "employeeType"
+                    },
+                    {
+                        type: "input",
+                        message: "What is the employee's name?",
+                        name: "employeeName"
+                    },
+                    {
+                        type: "input",
+                        message: "What is the employee's email address?",
+                        name: "employeeEmail"
+                    }
+                ])
                     .then(function (response) {
-                        let employeeGitHub = response.gitHubID;
+                        let employeeType = response.employeeType;
+                        let employeeName = response.employeeName;
+                        let employeeEmail = response.employeeEmail;
 
-                        let engineer = new Engineer(
-                            employeeName,
-                            employeeID,
-                            employeeEmail,
-                            employeeGitHub
-                        );
+                        if (employeeType === "Engineer") {
+                            inquirer
+                                .prompt([
+                                    {
+                                        type: "input",
+                                        message: "What is your employee's GitHub username?",
+                                        name: "gitHubID"
+                                    },
+                                    {
+                                        type: "list",
+                                        message: "Do you have more employees you'd like to add?",
+                                        choices: ["Yes", "No"],
+                                        name: "moreEmployees"
+                                    }
+                                ])
+                                .then(function (response) {
+                                    let employeeGitHub = response.gitHubID;
 
-                        employeeList.push(engineer);
-                        employeeID++;
+                                    let engineer = new Engineer(
+                                        employeeName,
+                                        employeeID,
+                                        employeeEmail,
+                                        employeeGitHub
+                                    );
 
-                        if (response.moreEmployees === "Yes") {
-                            employeePrompts();
+                                    employeeList.push(engineer);
+                                    employeeID++;
+
+                                    if (response.moreEmployees === "Yes") {
+                                        employeePrompts();
+                                    } else {
+                                        generatePage();
+                                        return;
+                                    }
+                                });
                         } else {
-                            generatePage();
-                            return;
+                            inquirer
+                                .prompt([
+                                    {
+                                        type: "input",
+                                        message: "Where does the intern go to school?",
+                                        name: "internSchool"
+                                    },
+                                    {
+                                        type: "list",
+                                        message: "Do you have more employees you'd like to add?",
+                                        choices: ["Yes", "No"],
+                                        name: "moreEmployees"
+                                    }
+                                ])
+                                .then(function (response) {
+                                    let employeeSchool = response.internSchool;
+
+                                    let intern = new Intern(
+                                        employeeName,
+                                        employeeID,
+                                        employeeEmail,
+                                        employeeSchool
+                                    );
+
+                                    employeeList.push(intern);
+
+                                    employeeID++;
+
+                                    if (response.moreEmployees === "Yes") {
+                                        employeePrompts();
+                                    } else {
+                                        generatePage();
+                                        return;
+                                    }
+                                });
                         }
                     });
-            } else {
-                inquirer
-                    .prompt([
-                        {
-                            type: "input",
-                            message: "Where does the intern go to school?",
-                            name: "internSchool"
-                        },
-                        {
-                            type: "list",
-                            message: "Do you have more employees you'd like to add?",
-                            choices: ["Yes", "No"],
-                            name: "moreEmployees"
-                        }
-                    ])
-                    .then(function (response) {
-                        let employeeSchool = response.internSchool;
 
-                        let intern = new Intern(
-                            employeeName,
-                            employeeID,
-                            employeeEmail,
-                            employeeSchool
-                        );
-
-                        employeeList.push(intern);
-
-                        employeeID++;
-
-                        if (response.moreEmployees === "Yes") {
-                            employeePrompts();
-                        } else {
-                            generatePage();
-                            return;
-                        }
-                    });
             }
-        });
-
-}
 
 function generatePage() {
-    let allCards = "";
+                let allCards = "";
 
-    employeeList.forEach(item => {
-        let cardString = item.createCard();
-        allCards += cardString;
-    });
+                employeeList.forEach(item => {
+                    let cardString = item.createCard();
+                    allCards += cardString;
+                });
 
-    let fullHTML = `
+                let fullHTML = `
    <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -210,12 +206,12 @@ function generatePage() {
 </html>
    `;
 
-    fs.writeFile("./output/TeamRoster.html", fullHTML, function (err) {
-        if (err) {
-            return console.log(err);
-        }
-    });
-}
+                fs.writeFile("./output/TeamRoster.html", fullHTML, function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
+            }
 
 managerPrompts();
             //     questions array
