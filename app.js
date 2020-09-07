@@ -15,55 +15,53 @@ const render = require("./lib/htmlRenderer");
 
 //asking questions then create and push the list then start addmember.
 //empty team to push new team members to
-let teamList= [];
+let teamList = [];
 
 function managerPrompts() {
     inquirer.prompt([
-            {
-                type: "input",
-                name: "managerName",
-                message: "what is the Manager name: ",    
-            },
+        {
+            type: "input",
+            name: "managerName",
+            message: "what is the Manager name: ",
+        },
 
-            {
-                type: "input",
-                name: "managerEmail",
-                message: "What is your email address?",
-            },
-            {
-                type: "input",
-                name: "managerId",
-                message: "What is your identification number?",
-            },
-            {
-                type: "input",
-                name: "managerOffice",
-                message: "What is your office phone number?",
-            }
-        ])
-        .then(function (response) {
-            let managerName = response.managerName;
-            let managerEmail = response.managerEmail;
-            let managerOffice = response.managerOffice;
-            let manager = new Manager(
-                managerName,
-                employeeID,
-                managerEmail,
-                managerOffice
-            );
+        {
+            type: "input",
+            name: "managerEmail",
+            message: "What is your email address?",
+        },
+        {
+            type: "input",
+            name: "managerId",
+            message: "What is your identification number?",
+        },
+        {
+            type: "input",
+            name: "managerOffice",
+            message: "What is your office phone number?",
+        }
+    ]).then(function (responses) {
+        const manager = new Manager(answers.managerName, parseInt(answers.managerId), answers.managerEmail, answers.managerOffice)
+        teamList.push(manager)
+        console.log(teamList);
+        addMember();
+    })
+        .catch(funtion(err) {
+            console.log(err);
+        });
 
-            employeeList.push(manager);
+    employeeList.push(manager);
 
-            employeeID++;
+    employeeID++;
 
-            console.log(`
+    console.log(`
          
          Now we'll collect information from you about your employees
          
          `);
 
-            employeePrompts();
-        });
+    employeePrompts();
+});
 }
 
 function employeePrompts() {
