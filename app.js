@@ -72,7 +72,18 @@ function managerPrompts() {
                 name: "github",
                 message: "what is your engineer's github username?"
             }
-            
+        ]).then(function (responses) {
+            //add engineer variables
+            const engineer = new Engineer(answers.name, parseInt(answers.engineerId), answers.email, answers.github);
+            //push to team list
+            teamList.push(engineer);
+            console.log(teamList);
+            //run addMember functions
+            addMember();
+        })
+    }
+    
+
 
 
                 function employeePrompts() {
