@@ -32,13 +32,13 @@ function managerPrompts() {
             },
             {
                 type: "input",
+                name: "managerId",
                 message: "What is your identification number?",
-                name: "managerId"
             },
             {
                 type: "input",
-                message: "What is your office number?",
-                name: "managerOffice"
+                name: "managerOffice",
+                message: "What is your office phone number?",
             }
         ])
         .then(function (response) {
