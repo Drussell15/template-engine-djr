@@ -97,7 +97,7 @@ function managerPrompts() {
             },
             {
                 type: "input",
-                name: "internId";
+                name: "internId",
                 message: "what is the intern id number?"
             },
             {
