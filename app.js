@@ -82,94 +82,32 @@ function managerPrompts() {
             addMember();
         })
     }
-    
 
-
-
-                function employeePrompts() {
-                inquirer
-                    .prompt([
-                    {
-                        type: "list",
-                        message: "What is the employee's role?",
-                        choices: ["Engineer", "Intern"],
-                        name: "employeeType"
-                    },
-                    {
-                        type: "input",
-                        message: "What is the employee's name?",
-                        name: "employeeName"
-                    },
-                    {
-                        type: "input",
-                        message: "What is the employee's email address?",
-                        name: "employeeEmail"
-                    }
-                ])
-                    .then(function (response) {
-                        let employeeType = response.employeeType;
-                        let employeeName = response.employeeName;
-                        let employeeEmail = response.employeeEmail;
-
-                        if (employeeType === "Engineer") {
-                            inquirer
-                                .prompt([
-                                    {
-                                        type: "input",
-                                        message: "What is your employee's GitHub username?",
-                                        name: "gitHubID"
-                                    },
-                                    {
-                                        type: "list",
-                                        message: "Do you have more employees you'd like to add?",
-                                        choices: ["Yes", "No"],
-                                        name: "moreEmployees"
-                                    }
-                                ])
-                                .then(function (response) {
-                                    let employeeGitHub = response.gitHubID;
-
-                                    let engineer = new Engineer(
-                                        employeeName,
-                                        employeeID,
-                                        employeeEmail,
-                                        employeeGitHub
-                                    );
-
-                                    employeeList.push(engineer);
-                                    employeeID++;
-
-                                    if (response.moreEmployees === "Yes") {
-                                        employeePrompts();
-                                    } else {
-                                        generatePage();
-                                        return;
-                                    }
-                                });
-                        } else {
-                            inquirer
-                                .prompt([
-                                    {
-                                        type: "input",
-                                        message: "Where does the intern go to school?",
-                                        name: "internSchool"
-                                    },
-                                    {
-                                        type: "list",
-                                        message: "Do you have more employees you'd like to add?",
-                                        choices: ["Yes", "No"],
-                                        name: "moreEmployees"
-                                    }
-                                ])
-                                .then(function (response) {
-                                    let employeeSchool = response.internSchool;
-
-                                    let intern = new Intern(
-                                        employeeName,
-                                        employeeID,
-                                        employeeEmail,
-                                        employeeSchool
-                                    );
+    function addInterns() {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "name",
+                message: "What is your intern's name?"
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "what is intern email addy?"
+            },
+            {
+                type: "input",
+                name: "internId";
+                message: "what is the intern id number?"
+            },
+            {
+                type: "input",
+                name: "school",
+                message: "what school does your intern attend?"
+            }
+        ]).then(function (responses) {
+            //add new intern variable
+        const intern = new intern(answers.name, parseInt(answers.internId), answers.email, answers.school);
 
                                     employeeList.push(intern);
 
