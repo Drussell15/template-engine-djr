@@ -107,23 +107,28 @@ function managerPrompts() {
             }
         ]).then(function (responses) {
             //add new intern variable
-        const intern = new intern(answers.name, parseInt(answers.internId), answers.email, answers.school);
-
-                                    employeeList.push(intern);
-
-                                    employeeID++;
-
-                                    if (response.moreEmployees === "Yes") {
-                                        employeePrompts();
-                                    } else {
-                                        generatePage();
-                                        return;
-                                    }
-                                });
-                        }
-                    });
-
+            const intern = new intern(answers.name, parseInt(answers.internId), answers.email, answers.school);
+            //push to list
+            teamList.push(intern);
+            console.log(teamList);
+            //run addMember
+            addMember();
+        })
+    }
+    //add new member function or end adding
+    function addMember() {
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "type",
+                message: "which type of member would you like to add?",
+                choices: [
+                    "Engineer",
+                    "Intern",
+                    "I dont want to add anymore team members"
+                ]
             }
+
 
 function generatePage() {
                 let allCards = "";
