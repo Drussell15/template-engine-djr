@@ -151,6 +151,6 @@ function managerPrompts() {
             console.log('HTML created! Check your output file!');
         })
     }
-
-    // this function will initiate
-    addManager();
+}
+// this function will initiate
+addManager();
