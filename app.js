@@ -83,7 +83,7 @@ function managerPrompts() {
         })
     }
 
-    function addInterns() {
+    function addIntern() {
         inquirer.prompt([
             {
                 type: "input",
@@ -128,17 +128,23 @@ function managerPrompts() {
                     "I dont want to add anymore team members"
                 ]
             }
+        ]).then(function (responses) {
+            //if engineer, addEngineer
+            if(answer.type === "Engineer") {
+                addEngineer();
+                //if intern, add intern
+            } else if (answer.type === "Intern") {
+                addIntern();
+            }
+            //if no more adding render page
+        else {
+            const renderTeam= render(teamList);
+            writeToFile(renderTeam);
+        }
+    })
+}
+function writeToFile(data) {
 
-
-function generatePage() {
-                let allCards = "";
-
-                employeeList.forEach(item => {
-                    let cardString = item.createCard();
-                    allCards += cardString;
-                });
-
-                let fullHTML = `
    <!DOCTYPE html>
 <html lang="en">
    <head>
